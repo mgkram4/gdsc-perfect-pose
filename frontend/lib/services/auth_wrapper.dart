@@ -8,9 +8,8 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: Text('AuthWrapper: Implement authentication logic here')),
+    return const Scaffold(
+          body: Text('AuthWrapper: Implement authentication logic here'),
     );
   }
 }

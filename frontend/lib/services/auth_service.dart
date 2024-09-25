@@ -1,8 +1,22 @@
-// TODO sign up
+import 'package:firebase_auth/firebase_auth.dart';
 
-// TODO sign in
+Future<UserCredential> signUp(String email, String password) async {
+  final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+  return credential;
+}
 
-// TODO sign out
+Future<UserCredential> signIn(String email, String password) async {
+  final credential = await FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: email, password: password);
+  return credential;
+}
+
+Future<void> signOut() async {
+  await FirebaseAuth.instance.signOut();
+}
 
 // TODO update user data
 

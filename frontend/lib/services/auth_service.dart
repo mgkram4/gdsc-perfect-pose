@@ -18,6 +18,24 @@ Future<void> signOut() async {
   await FirebaseAuth.instance.signOut();
 }
 
+
+
+
+// AUTH STATE
+Stream<User?> authStateChanges() {
+  return FirebaseAuth.instance.authStateChanges();
+}
+
+User? getCurrentUser() {
+  return FirebaseAuth.instance.currentUser;
+}
+
+
+
+
+
 // TODO update user data
 
 // TODO stream user data
+
+

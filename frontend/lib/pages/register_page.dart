@@ -21,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/register_bg_img.png'),
+                image: AssetImage('Images/register_bg_img.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -40,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Register today',
+                          'Register Today',
                           style: TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
@@ -160,9 +160,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Sign up with Google Button
                   ElevatedButton(
-                    onPressed: () {
-                      // Add sign up with Google functionality here
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5FD469),
                       foregroundColor: Colors.white,
@@ -184,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   // Already Have an Account Text
                   GestureDetector(
                     onTap: () {
-                      // Navigate to Login Page
+                      Navigator.pushNamed(context, "/login");
                     },
                     child: RichText(
                       text: const TextSpan(

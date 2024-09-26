@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:perfect_pose/pages/home_page.dart';
+import 'package:perfect_pose/pages/login_page.dart';
+import 'package:perfect_pose/pages/register_page.dart';
 import 'package:perfect_pose/services/auth_wrapper.dart';
 
 void main() async {
@@ -12,8 +14,10 @@ void main() async {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  // Defined Routes
+  // DEFINED ROUTES
   static const String home = "/home";
+  static const String login = "/login";
+  static const String register = "/register";
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +25,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         home: (context) => const HomePage(),
+        login: (context) => const LoginPage(),
+        register: (context) => const RegisterPage(),
       },
       home: const AuthWrapper(),
     );

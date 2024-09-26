@@ -13,7 +13,7 @@ class LoginPage extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
-                    'assets/images/login_bg_img.png'), // Replace with your image path
+                    'Images/login_bg_img.png'), // Replace with your image path
                 fit: BoxFit.cover,
               ),
             ),
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                           CrossAxisAlignment.start, // Left-aligns the text
                       children: [
                         Text(
-                          'Welcome back,',
+                          'Welcome Back,',
                           style: TextStyle(
                             fontSize: 50,
                             fontWeight: FontWeight.bold,
@@ -124,7 +124,7 @@ class LoginPage extends StatelessWidget {
                       // Add your sign-up with Google functionality here
                     },
                     label: const Text(
-                      'Sign up with Google',
+                      'Log In with Google',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class LoginPage extends StatelessWidget {
                   // Not a Registered User Text
                   GestureDetector(
                     onTap: () {
-                      // Navigate to Register page
+                      Navigator.pushNamed(context, '/register');
                     },
                     child: RichText(
                       text: const TextSpan(

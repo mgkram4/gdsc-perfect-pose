@@ -13,7 +13,7 @@ class AuthWrapper extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           User? user = snapshot.data;
-          if (user == null) {
+          if (user != null) {
             return const LoginPage();
           } else {
             return const HomePage();

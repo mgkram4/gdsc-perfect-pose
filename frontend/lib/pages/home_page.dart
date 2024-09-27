@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perfect_pose/widgets/bottom_bar.dart';
+import 'package:perfect_pose/widgets/top_app_bar.dart';
 import 'package:perfect_pose/widgets/settings_modal.dart';
 
 // Helper function to get dynamic font size based on screen width
@@ -18,6 +19,10 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: top_app_bar(
+        centerText: 'Dashboard',
+        onSettingsTap: () => showSettingsModal(context),
+      ),
       bottomNavigationBar: const bottom_bar(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -29,37 +34,6 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header Section: Avatar, Dashboard Title, and Settings Icon
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // Navigate to profile page, replace with our profile page later
-                        Navigator.pushNamed(context, '/profilePage');
-                      },
-                      child: CircleAvatar(
-                        radius: screenWidth * 0.065,
-                        // Replace with our profile image route
-                      ),
-                    ),
-                    Text(
-                      'Dashboard',
-                      style: TextStyle(
-                        fontSize: getDynamicFontSize(context, 28), 
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.settings),
-                      onPressed: () {
-                        showSettingsModal(context);
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: screenHeight * 0.02), 
-
                 // Daily Challenges Card
                 Card(
                   elevation: 5,

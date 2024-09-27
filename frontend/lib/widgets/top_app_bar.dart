@@ -1,45 +1,53 @@
 import 'package:flutter/material.dart';
 
-//example to use it -> appBar: top_app_bar(centerText: 'name')
-//use other parameters if possible, or they will be simply null
 class top_app_bar extends StatelessWidget implements PreferredSizeWidget {
   final String centerText;
   final String? profilePicUrl;
-  final Scaffold? secondRoute;
-  const top_app_bar({super.key, required this.centerText, this.profilePicUrl, this.secondRoute});
+  final VoidCallback onSettingsTap;
+
+  const top_app_bar({
+    Key? key,
+    required this.centerText,
+    this.profilePicUrl,
+    required this.onSettingsTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Left: Avatar image or fallback icon
-          profilePicUrl != null && profilePicUrl!.isNotEmpty
-              ? CircleAvatar(
-                  backgroundImage: NetworkImage(profilePicUrl!),
-                  radius: 20,
-                )
-              : const Icon(Icons.account_circle_outlined, size: 40),
+          GestureDetector(
+            onTap: () {
+              // Navigate to profile page
+              Navigator.pushNamed(context, '/profilePage');
+            },
+            child: CircleAvatar(
+              radius: MediaQuery.of(context).size.width * 0.065,
+              backgroundImage:
+                  profilePicUrl != null ? NetworkImage(profilePicUrl!) : null,
+              child: profilePicUrl == null
+                  ? const Icon(Icons.account_circle_outlined, size: 40)
+                  : null,
+            ),
+          ),
 
           // Center: Page title
           Text(
             centerText,
-            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              fontSize: getDynamicFontSize(context, 28),
+              fontWeight: FontWeight.bold,
+            ),
           ),
 
-          // Right: Gear icon for navigating to profile page
+          // Right: Gear icon for settings
           IconButton(
             iconSize: 30,
-            icon: const Icon(Icons.settings), 
-            onPressed: () { 
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (context) => 
-                secondRoute ?? const BlankPage() 
-                )
-              ); 
-            },
+            icon: const Icon(Icons.settings),
+            onPressed: onSettingsTap,
           )
         ],
       ),
@@ -50,21 +58,8 @@ class top_app_bar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class BlankPage extends StatelessWidget {
-  const BlankPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Blank page", 
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)
-          ),
-        )
-      ),
-    );
-  }
+// Helper function to get dynamic font size based on screen width
+double getDynamicFontSize(BuildContext context, double fontSize) {
+  double screenWidth = MediaQuery.of(context).size.width;
+  return fontSize * screenWidth / 390;
 }

@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:perfect_pose/services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -8,8 +10,79 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   // Indicates whether the user has agreed to the Terms and Conditions
   bool _isTermsChecked = false;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleRegister(BuildContext context) async {
+    if (_nameController.text == "" ||
+        _emailController.text == "" ||
+        _passwordController.text == "" ||
+        !_isTermsChecked) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text("Missing required fields"),
+          );
+        },
+      );
+      return;
+    }
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await signUp(_emailController.text, _passwordController.text);
+      getCurrentUser()?.updateProfile(displayName: _nameController.text);
+    } on FirebaseAuthException catch (e) {
+      if (!context.mounted) {
+        return;
+      }
+
+      String errorMsg;
+      switch (e.code) {
+        case 'invalid-email':
+          errorMsg = "Invalid email";
+        case 'email-already-in-use':
+          errorMsg = "This email is already in use by another account";
+        case 'weak-password':
+          errorMsg = e.message == null
+              ? 'Password requirements are not met'
+              : e.message!;
+        default:
+          errorMsg = "Server error";
+      }
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(errorMsg),
+          );
+        },
+      );
+    } finally {
+      setState(() {
+        _isTermsChecked = false;
+        _isLoading = false;
+      });
+      _passwordController.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +134,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Name Input Field
                   TextField(
+                    controller: _nameController,
+                    readOnly: _isLoading,
                     decoration: InputDecoration(
                       hintText: 'Full Name',
                       filled: true,
@@ -74,6 +149,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Email Input Field
                   TextField(
+                    controller: _emailController,
+                    readOnly: _isLoading,
                     decoration: InputDecoration(
                       hintText: 'Email',
                       filled: true,
@@ -87,6 +164,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Password Input Field
                   TextField(
+                    controller: _passwordController,
+                    readOnly: _isLoading,
                     obscureText: true,
                     enableSuggestions: false,
                     autocorrect: false,
@@ -121,9 +200,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Create Account Button
                   ElevatedButton(
-                    onPressed: () {
-                      // Add create account functionality here
-                    },
+                    onPressed:
+                        _isLoading ? null : () => _handleRegister(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5F87D4),
                       foregroundColor: Colors.white,

@@ -1,7 +1,75 @@
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:perfect_pose/services/auth_service.dart";
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleLogin(BuildContext context) async {
+    if (emailController.text == "" || passwordController.text == "") {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return const AlertDialog(
+            content: Text("Missing required fields"),
+          );
+        },
+      );
+      return;
+    }
+
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await signIn(emailController.text, passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      if (!context.mounted) {
+        return;
+      }
+
+      String errorMsg;
+      switch (e.code) {
+        case 'invalid-email':
+          errorMsg = "Invalid email";
+        case 'user-not-found' || 'wrong-password':
+          errorMsg = "Invalid credentials";
+        default:
+          errorMsg = "Server error";
+      }
+
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(errorMsg),
+          );
+        },
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+      passwordController.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +122,8 @@ class LoginPage extends StatelessWidget {
 
                   // Email Input Field
                   TextField(
+                    controller: emailController,
+                    readOnly: _isLoading,
                     decoration: InputDecoration(
                       hintText: 'Email',
                       filled: true,
@@ -67,6 +137,8 @@ class LoginPage extends StatelessWidget {
 
                   // Password Input Field
                   TextField(
+                    controller: passwordController,
+                    readOnly: _isLoading,
                     obscureText: true,
                     decoration: InputDecoration(
                       hintText: 'Password',
@@ -81,9 +153,7 @@ class LoginPage extends StatelessWidget {
 
                   // Login Button
                   ElevatedButton(
-                    onPressed: () {
-                      // Add your login functionality here
-                    },
+                    onPressed: _isLoading ? null : () => _handleLogin(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5F87D4),
                       foregroundColor: Colors.white,

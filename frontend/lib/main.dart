@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:perfect_pose/pages/history_page.dart';
 import 'package:perfect_pose/pages/home_page.dart';
 import 'package:perfect_pose/pages/login_page.dart';
 import 'package:perfect_pose/pages/register_page.dart';
@@ -28,7 +29,7 @@ class MainApp extends StatelessWidget {
         login: (context) => const LoginPage(),
         register: (context) => const RegisterPage(),
       },
-      home: const AuthWrapper(),
+      home: const HistoryPage(),
     );
   }
 }

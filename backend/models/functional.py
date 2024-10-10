@@ -1,12 +1,46 @@
+import os
 import numpy as np
-from app.utils.image_processor import extract_pose_landmarks
+from utils.process_img import extract_pose_landmarks
+import logging
 
-FUNCTIONAL_POSES = ["Lunge"]
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+FUNCTIONAL_POSES = ["Lunge", "Mountain Climber"]
 
 def load_functional_poses(pose_analyzer):
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     for pose in FUNCTIONAL_POSES:
-        landmarks = load_landmarks_from_file(f"data/functional/{pose}.jpg")
-        pose_analyzer.add_pose("functional", pose, landmarks)
+        pose_dir = os.path.join(base_dir, "data", "poses", "functional", pose)
+        if os.path.isdir(pose_dir):
+            image_files = [f for f in os.listdir(pose_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
+            if image_files:
+                file_path = os.path.join(pose_dir, image_files[0])
+                logger.info(f"Attempting to load pose: {pose}")
+                logger.info(f"File path: {file_path}")
+                landmarks = load_landmarks_from_file(file_path)
+                if landmarks is not None:
+                    pose_analyzer.add_pose("functional", pose, landmarks)
+                    logger.info(f"Successfully added pose: {pose}")
+                else:
+                    logger.warning(f"Failed to load landmarks for {pose}")
+            else:
+                logger.warning(f"No image files found for pose: {pose}")
+        else:
+            logger.warning(f"Directory not found for pose: {pose}")
 
 def load_landmarks_from_file(filename):
-    return extract_pose_landmarks(filename)
+    if not os.path.exists(filename):
+        logger.error(f"File does not exist: {filename}")
+        return None
+    
+    if not os.access(filename, os.R_OK):
+        logger.error(f"File is not readable: {filename}")
+        return None
+    
+    landmarks = extract_pose_landmarks(filename)
+    if landmarks is None:
+        logger.error(f"Failed to extract landmarks from: {filename}")
+    else:
+        logger.info(f"Successfully extracted landmarks from: {filename}")
+    return landmarks

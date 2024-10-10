@@ -1,6 +1,11 @@
+import logging
+
 import numpy as np
+from utils.process_img import extract_pose_landmarks
 from scipy.spatial.distance import cosine
-from app.utils.image_processor import extract_pose_landmarks
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class PoseAnalyzer:
     def __init__(self):
@@ -14,12 +19,16 @@ class PoseAnalyzer:
     def add_pose(self, category, pose_name, landmarks):
         if category not in self.pose_databases:
             raise ValueError(f"Invalid category: {category}")
+        if landmarks is None:
+            logger.warning(f"No landmarks detected for {pose_name} in {category}")
+            return
         self.pose_databases[category][pose_name] = landmarks
+        logger.info(f"Added {pose_name} to {category}")
 
     def calculate_similarity(self, user_landmarks, category, pose_name):
         if category not in self.pose_databases or pose_name not in self.pose_databases[category]:
             raise ValueError(f"Pose {pose_name} not found in category {category}")
-
+        
         user_landmarks = np.asarray(user_landmarks).flatten()
         pro_landmarks = np.asarray(self.pose_databases[category][pose_name]).flatten()
         

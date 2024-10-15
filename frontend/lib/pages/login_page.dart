@@ -10,20 +10,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _authService = AuthService();
 
   bool _isLoading = false;
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
-  Future<void> _handleLogin(BuildContext context) async {
-    if (emailController.text == "" || passwordController.text == "") {
+  Future<void> _handleLogin(
+      BuildContext context, String email, String password) async {
+    if (email == "" || password == "") {
       showDialog(
         context: context,
         builder: (context) {
@@ -39,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
-      await signIn(emailController.text, passwordController.text);
+      await _authService.signIn(email, password);
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) {
         return;
@@ -67,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = false;
       });
-      passwordController.clear();
+      _passwordController.clear();
     }
   }
 
@@ -122,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Email Input Field
                   TextField(
-                    controller: emailController,
+                    controller: _emailController,
                     readOnly: _isLoading,
                     decoration: InputDecoration(
                       hintText: 'Email',
@@ -137,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Password Input Field
                   TextField(
-                    controller: passwordController,
+                    controller: _passwordController,
                     readOnly: _isLoading,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -153,7 +155,10 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Login Button
                   ElevatedButton(
-                    onPressed: _isLoading ? null : () => _handleLogin(context),
+                    onPressed: _isLoading
+                        ? null
+                        : () => _handleLogin(context, _emailController.text,
+                            _passwordController.text),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5F87D4),
                       foregroundColor: Colors.white,

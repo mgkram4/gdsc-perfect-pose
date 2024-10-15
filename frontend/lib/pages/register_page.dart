@@ -13,6 +13,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _authService = AuthService();
 
   // Indicates whether the user has agreed to the Terms and Conditions
   bool _isTermsChecked = false;
@@ -26,11 +27,9 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  Future<void> _handleRegister(BuildContext context) async {
-    if (_nameController.text == "" ||
-        _emailController.text == "" ||
-        _passwordController.text == "" ||
-        !_isTermsChecked) {
+  Future<void> _handleRegister(BuildContext context, String name, String email,
+      String password, bool termsAccepted) async {
+    if (name == "" || email == "" || password == "" || !termsAccepted) {
       showDialog(
         context: context,
         builder: (context) {
@@ -46,8 +45,8 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _isLoading = true;
       });
-      await signUp(_emailController.text, _passwordController.text);
-      getCurrentUser()?.updateProfile(displayName: _nameController.text);
+      await _authService.signUp(email, password);
+      _authService.getCurrentUser()?.updateProfile(displayName: name);
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) {
         return;
@@ -77,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     } finally {
       setState(() {
-        _isTermsChecked = false;
+        termsAccepted = false;
         _isLoading = false;
       });
       _passwordController.clear();
@@ -200,8 +199,14 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Create Account Button
                   ElevatedButton(
-                    onPressed:
-                        _isLoading ? null : () => _handleRegister(context),
+                    onPressed: _isLoading
+                        ? null
+                        : () => _handleRegister(
+                            context,
+                            _nameController.text,
+                            _emailController.text,
+                            _passwordController.text,
+                            _isTermsChecked),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5F87D4),
                       foregroundColor: Colors.white,

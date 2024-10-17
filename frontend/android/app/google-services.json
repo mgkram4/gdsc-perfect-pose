@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:987251277271:android:8fa977d18a897cdf8f5f92",
         "android_client_info": {
-          "package_name": "com.perfectPose.app"
+          "package_name": "com.example.perfect_pose"
         }
       },
       "oauth_client": [],

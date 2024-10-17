@@ -87,53 +87,66 @@ class HomePage extends StatelessWidget {
                 // Two Cards: Unlock the Power and Perfect Your Craft
                 Row(
                   children: [
+                    // Unlock the Power of Perfect Form Card
                     Expanded(
-                      child: Card(
-                        elevation: 5,
-                        color: Colors.black,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(screenWidth * 0.04),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Unlock the Power of Perfect Form',
-                                style: TextStyle(
-                                  fontSize: getDynamicFontSize(context, 13), 
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                      child: GestureDetector(
+                        onTap: () => _showDialog(context, 'Unlock the Power of Perfect Form', 
+                          'Learn how to perfect your form with real-time feedback from the app. '
+                          'Whether you are into weight lifting, yoga, or other exercises, you can improve your form and prevent injuries.'),
+                        child: Card(
+                          elevation: 5,
+                          color: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(screenWidth * 0.04),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Unlock the Power of Perfect Form',
+                                  style: TextStyle(
+                                    fontSize: getDynamicFontSize(context, 13), 
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     const SizedBox(width: 8),
+
+                    // Perfect Your Craft Card
                     Expanded(
-                      child: Card(
-                        elevation: 5,
-                        color: Colors.blue[100],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(screenWidth * 0.04), 
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Perfect your Craft\nPractice with a Pro',
-                                style: TextStyle(
-                                  fontSize: getDynamicFontSize(context, 13), 
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                      child: GestureDetector(
+                        onTap: () => _showDialog(context, 'Perfect your Craft', 
+                          'Get guidance from professionals to help you improve your exercise routine. '
+                          'Whether you\'re a beginner or an expert, this app provides the tools and insights to master your craft.'),
+                        child: Card(
+                          elevation: 5,
+                          color: Colors.blue[100],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(screenWidth * 0.04),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Perfect your Craft\nPractice with a Pro',
+                                  style: TextStyle(
+                                    fontSize: getDynamicFontSize(context, 13), 
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -187,6 +200,50 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  // Helper function to show pop-up dialog
+  void _showDialog(BuildContext context, String title, String content) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.white,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 15.0), // Adjust padding here
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min, // Minimal size for the dialog
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(content),
+            const SizedBox(height: 15), // Reduced space before the button
+            Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();  // Close dialog
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  minimumSize: const Size(200, 50),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('Let\'s Get Started', style: TextStyle(color: Colors.white)),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+  }
+
 
   // Helper method to create category buttons with dynamic font size and navigation
   Widget _buildCategoryButton(String label, double screenWidth, BuildContext context, String route) {

@@ -11,10 +11,7 @@ import 'package:perfect_pose/services/auth_wrapper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  if (kDebugMode) {
-    await FirebaseAuth.instance.useAuthEmulator("localhost", 9099);
-  }
+  
   runApp(const MainApp());
 }
 

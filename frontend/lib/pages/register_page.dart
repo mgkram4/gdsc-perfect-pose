@@ -15,7 +15,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _authService = AuthService();
 
-  // Indicates whether the user has agreed to the Terms and Conditions
   bool _isTermsChecked = false;
   bool _isLoading = false;
 
@@ -29,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> _handleRegister(BuildContext context, String name, String email,
       String password, bool termsAccepted) async {
-    if (name == "" || email == "" || password == "" || !termsAccepted) {
+    if (name.isEmpty || email.isEmpty || password.isEmpty || !termsAccepted) {
       showDialog(
         context: context,
         builder: (context) {
@@ -45,12 +44,22 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _isLoading = true;
       });
-      await _authService.signUp(email, password);
-      _authService.getCurrentUser()?.updateProfile(displayName: name);
+
+      // Sign up the user
+      UserCredential userCredential =
+          await _authService.signUp(email, password);
+
+      // Update the user's display name
+      await _authService.updateUserDisplayName(name);
+
+      // The user is already signed in after registration, no need to sign in again
+
+      // Navigate to the home page or the next screen after successful registration
+      if (!context.mounted) return;
+      Navigator.pushReplacementNamed(
+          context, "/home"); // Replace with your home route
     } on FirebaseAuthException catch (e) {
-      if (!context.mounted) {
-        return;
-      }
+      if (!context.mounted) return;
 
       String errorMsg;
       switch (e.code) {
@@ -59,11 +68,9 @@ class _RegisterPageState extends State<RegisterPage> {
         case 'email-already-in-use':
           errorMsg = "This email is already in use by another account";
         case 'weak-password':
-          errorMsg = e.message == null
-              ? 'Password requirements are not met'
-              : e.message!;
+          errorMsg = e.message ?? 'Password requirements are not met';
         default:
-          errorMsg = "Server error";
+          errorMsg = "Registration error: ${e.message}";
       }
 
       showDialog(
@@ -74,12 +81,20 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         },
       );
+    } catch (e) {
+      if (!context.mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text("An unexpected error occurred: $e"),
+          );
+        },
+      );
     } finally {
       setState(() {
-        termsAccepted = false;
         _isLoading = false;
       });
-      _passwordController.clear();
     }
   }
 
@@ -243,7 +258,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Sign up with Google Button
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // TODO: Implement Google Sign-In
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5FD469),
                       foregroundColor: Colors.white,

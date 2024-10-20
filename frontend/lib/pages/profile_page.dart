@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:perfect_pose/services/auth_service.dart';
 import 'package:perfect_pose/widgets/bottom_bar.dart';
 import 'package:perfect_pose/widgets/settings_modal.dart';
 import 'package:perfect_pose/widgets/top_app_bar.dart';
+
+final user = AuthService();
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -33,7 +36,8 @@ class ProfilePage extends StatelessWidget {
                     horizontal: screenWidth * 0.01,
                     vertical: screenHeight * 0.01,
                   ),
-                  padding: const EdgeInsets.only(left: 15, right: 15, bottom: 5),
+                  padding:
+                      const EdgeInsets.only(left: 15, right: 15, bottom: 5),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
@@ -62,8 +66,19 @@ class ProfilePage extends StatelessWidget {
 
                           // Logout Button
                           GestureDetector(
-                            onTap: () {
-                              // Add logout functionality here
+                            onTap: () async {
+                              try {
+                                await user.signOut();
+                                // Navigate to login page or home page after logout
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/login');
+                              } catch (e) {
+                                // Show error message
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Failed to log out: $e')),
+                                );
+                              }
                             },
                             child: Text(
                               'Logout',
@@ -146,7 +161,8 @@ class ProfilePage extends StatelessWidget {
                 ),
 
                 // Create Recent Activities Containers
-                _buildHistoryContainer(context, "Downward Dog", "9/13/2024", 67),
+                _buildHistoryContainer(
+                    context, "Downward Dog", "9/13/2024", 67),
                 _buildHistoryContainer(context, "Plank", "9/14/2024", 78),
 
                 // Delete Account Button
@@ -190,7 +206,7 @@ class ProfilePage extends StatelessWidget {
 
 // Helper method to create exercise containers with dynamic font sizing
 Widget _buildHistoryContainer(
-  BuildContext context, String exerciseName, String date, int score) {
+    BuildContext context, String exerciseName, String date, int score) {
   double screenWidth = MediaQuery.of(context).size.width;
   double screenHeight = MediaQuery.of(context).size.height;
   double fontSizeExercise = screenWidth * 0.0675;

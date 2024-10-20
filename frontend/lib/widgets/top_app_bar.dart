@@ -22,7 +22,7 @@ class top_app_bar extends StatelessWidget implements PreferredSizeWidget {
           GestureDetector(
             onTap: () {
               // Navigate to profile page
-              Navigator.pushNamed(context, '/profilePage');
+              Navigator.pushNamed(context, '/profile');
             },
             child: CircleAvatar(
               radius: MediaQuery.of(context).size.width * 0.065,

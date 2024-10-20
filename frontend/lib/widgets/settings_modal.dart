@@ -12,7 +12,8 @@ void showSettingsModal(BuildContext context) {
     builder: (BuildContext context) {
       return SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 10.0, bottom: 10.0), // Padding to move the content up
+          padding: const EdgeInsets.only(
+              top: 10.0, bottom: 10.0), // Padding to move the content up
           child: Wrap(
             children: [
               ListTile(
@@ -27,8 +28,7 @@ void showSettingsModal(BuildContext context) {
                 leading: const Icon(Icons.settings),
                 title: const Text('Settings'),
                 onTap: () {
-                  // Add Settings action
-                  Navigator.pop(context); // Dismiss modal when tapped
+                  Navigator.pushNamed(context, '/profile');
                 },
               ),
             ],

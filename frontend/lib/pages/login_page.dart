@@ -2,6 +2,8 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:perfect_pose/services/auth_service.dart";
 
+final user = AuthService();
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -12,7 +14,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _authService = AuthService();
 
   bool _isLoading = false;
 
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _isLoading = true;
       });
-      await _authService.signIn(email, password);
+      await user.signIn(email, password);
     } on FirebaseAuthException catch (e) {
       if (!context.mounted) {
         return;

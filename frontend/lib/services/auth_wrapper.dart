@@ -14,13 +14,15 @@ class AuthWrapper extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.active) {
           User? user = snapshot.data;
           if (user != null) {
-            return const LoginPage();
-          } else {
+            // User is signed in, return HomePage
             return const HomePage();
+          } else {
+            // User is not signed in, return LoginPage
+            return const LoginPage();
           }
         }
 
-        // LOAD STATE
+        // Connection state is not active, show loading indicator
         return const Scaffold(
           body: Center(
             child: CircularProgressIndicator(),

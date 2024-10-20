@@ -20,9 +20,8 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: top_app_bar(
-        centerText: "History",
-        onSettingsTap: () => showSettingsModal(context)
-      ),
+          centerText: "History",
+          onSettingsTap: () => showSettingsModal(context)),
       body: SafeArea(
         child: ListView(
           scrollDirection: Axis.vertical,

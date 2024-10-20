@@ -1,10 +1,12 @@
+// File: auth_service.dart
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   Future<UserCredential> signUp(String email, String password) async {
     try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final credential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -16,8 +18,10 @@ class AuthService {
 
   Future<UserCredential> signIn(String email, String password) async {
     try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      final credential = await _auth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       return credential;
     } catch (e) {
       rethrow;
@@ -25,19 +29,25 @@ class AuthService {
   }
 
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await _auth.signOut();
   }
 
   // AUTH STATE
   Stream<User?> authStateChanges() {
-    return FirebaseAuth.instance.authStateChanges();
+    return _auth.authStateChanges();
   }
 
   User? getCurrentUser() {
-    return FirebaseAuth.instance.currentUser;
+    return _auth.currentUser;
   }
 
-  // TODO update user data
-
-  // TODO stream user data
+  // Update user display name
+  Future<void> updateUserDisplayName(String displayName) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await user.updateProfile(displayName: displayName);
+    } else {
+      throw Exception('No user is currently signed in.');
+    }
+  }
 }

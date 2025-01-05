@@ -67,22 +67,3 @@ def load_poses(category, pose_list, pose_analyzer):
         else:
             logger.warning(f"No matching .npy files found for pose: {pose}")
             logger.warning(f"Available files: {all_files}")
-
-# Define pose lists
-YOGA_POSES = ["Dog", "Tree Pose", "Warrior I", "Warrior 2"]
-BODYWEIGHT_POSES = ["Burpee", "Plank", "Push-up"]
-FUNCTIONAL_POSES = ["Lunge", "Mountain Climber"]
-LIFTING_POSES = ["Bench", "Deadlift", "Squat"]
-
-# Create loader functions using partial application
-def load_yoga_poses(pose_analyzer):
-    return load_poses("yoga", YOGA_POSES, pose_analyzer)
-
-def load_bodyweight_poses(pose_analyzer):
-    return load_poses("bodyweight", BODYWEIGHT_POSES, pose_analyzer)
-
-def load_functional_poses(pose_analyzer):
-    return load_poses("functional", FUNCTIONAL_POSES, pose_analyzer)
-
-def load_lifting_poses(pose_analyzer):
-    return load_poses("lifting", LIFTING_POSES, pose_analyzer)

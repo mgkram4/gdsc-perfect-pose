@@ -1,5 +1,5 @@
 name: perfect_pose
-description: "A new Flutter project."
+description: "Pose Analysis App"
 publish_to: 'none'
 version: 0.1.0
 
@@ -17,14 +17,25 @@ dependencies:
   fl_chart: ^0.69.0
   dio: ^5.7.0
   syncfusion_flutter_charts: ^27.1.52
+  http: ^1.1.2 
+  cupertino_icons: ^1.0.6 
+  
+  
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  flutter_launcher_icons:
+
+flutter_icons:
+  android: "perfect_pose"
+  ios: true
+  image_path: "Images/icon.png"
 
 flutter:
   uses-material-design: true
   assets:
     - Images/login_bg_img.png
     - Images/register_bg_img.png
+    - Images/icon.png

@@ -2,7 +2,7 @@
     <application
         android:label="perfect_pose"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/perfect_pose">
         <activity
             android:name=".MainActivity"
             android:exported="true"

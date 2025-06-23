@@ -5,3 +5,10 @@ mediapipe
 flask
 werkzeug
 flask-cors
+tensorflow
+matplotlib
+seaborn
+pandas
+scikit-learn
+requests
+pillow

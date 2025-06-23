@@ -1,1 +1,335 @@
+# ==============================================================================
+# PERFECT POSE PROJECT - PRODUCTION .GITIGNORE
+# ==============================================================================
+
+# ==============================================================================
+# LARGE DATASETS & MODELS (Too large for Git)
+# ==============================================================================
+# Massive datasets - these are too large for git and should be downloaded separately
+datasets/massive_collection/
+datasets/downloaded/
+models/data/process/
+models/models/saved/*.keras
+backend/models/data/images/
+backend/models/models/saved/
+
+# Research results and generated files
+research_results/
+backend/research_results/
+
+# ==============================================================================
+# PYTHON / MACHINE LEARNING
+# ==============================================================================
+# Virtual environments
+backend/venv/
+venv/
+env/
+.env
+.venv
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# poetry
+poetry.lock
+
+# pdm
+.pdm.toml
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# TensorFlow/Keras model files
+*.h5
+*.hdf5
+
+# Training logs and checkpoints
+training_log_*.txt
+research_logs.log
+*.log
+
+# ==============================================================================
+# FLUTTER / DART
+# ==============================================================================
+# Miscellaneous
+*.class
+*.pyc
+*.swp
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+frontend/build/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# iOS build artifacts
+frontend/ios/Pods/
+frontend/ios/Runner.xcworkspace/xcuserdata/
+frontend/ios/Flutter/App.framework
+frontend/ios/Flutter/Flutter.framework
+frontend/ios/Flutter/Flutter.podspec
+frontend/ios/Flutter/Generated.xcconfig
+frontend/ios/Flutter/ephemeral
+frontend/ios/Runner/GeneratedPluginRegistrant.*
+
+# macOS build artifacts
+frontend/macos/Flutter/ephemeral
+
+# ==============================================================================
+# FIREBASE
+# ==============================================================================
 firebase.json
+.firebaserc
+firestore.indexes.json
+firestore.rules
+storage.rules
+functions/node_modules/
+functions/.env
+
+# ==============================================================================
+# OPERATING SYSTEM
+# ==============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==============================================================================
+# IDE / EDITORS
+# ==============================================================================
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# PyCharm / IntelliJ IDEA
+.idea/
+*.iws
+/out/
+
+# ==============================================================================
+# PACKAGE MANAGERS
+# ==============================================================================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# ==============================================================================
+# TEMPORARY & CACHE FILES
+# ==============================================================================
+*.tmp
+*.temp
+*.cache
+.cache/
+tmp/
+temp/
+
+# ==============================================================================
+# SECURITY & CREDENTIALS
+# ==============================================================================
+# API keys and secrets
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+*.pem
+*.key
+*.p12
+*.p8
+google-services.json
+GoogleService-Info.plist
+credentials.json
+kaggle.json
+
+# ==============================================================================
+# MISC PROJECT-SPECIFIC
+# ==============================================================================
+# Compressed files (likely containing large datasets)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Generated images/videos
+*.mp4
+*.avi
+*.mov
+*.png.bak
+*.jpg.bak

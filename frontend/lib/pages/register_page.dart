@@ -45,12 +45,9 @@ class _RegisterPageState extends State<RegisterPage> {
         _isLoading = true;
       });
 
-      // Sign up the user
+      // Sign up the user with display name
       UserCredential userCredential =
-          await _authService.signUp(email, password);
-
-      // Update the user's display name
-      await _authService.updateUserDisplayName(name);
+          await _authService.signUp(email, password, displayName: name);
 
       // The user is already signed in after registration, no need to sign in again
 
@@ -95,6 +92,45 @@ class _RegisterPageState extends State<RegisterPage> {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final userCredential = await _authService.signInWithGoogle();
+
+      if (userCredential != null && mounted) {
+        // Successfully signed in with Google, navigate to home
+        Navigator.pushReplacementNamed(context, "/home");
+      }
+    } catch (e) {
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Sign-In Error'),
+              content: Text('Google Sign-In failed: ${e.toString()}'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -195,11 +231,28 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Terms and Conditions Checkbox
                   CheckboxListTile(
-                    title: const Text(
-                      'I agree to the Terms and Conditions',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                    title: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/terms');
+                      },
+                      child: RichText(
+                        text: const TextSpan(
+                          text: 'I agree to the ',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Terms and Conditions',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     contentPadding: EdgeInsets.zero,
@@ -258,9 +311,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   // Sign up with Google Button
                   ElevatedButton(
-                    onPressed: () {
-                      // TODO: Implement Google Sign-In
-                    },
+                    onPressed: _isLoading ? null : _handleGoogleSignIn,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF5FD469),
                       foregroundColor: Colors.white,

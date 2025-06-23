@@ -15,21 +15,24 @@ class top_app_bar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Left: Avatar image or fallback icon
           GestureDetector(
             onTap: () {
-              // Navigate to profile page
               Navigator.pushNamed(context, '/profile');
             },
             child: CircleAvatar(
-              radius: MediaQuery.of(context).size.width * 0.065,
+              radius: MediaQuery.of(context).size.width * 0.055,
+              backgroundColor: Colors.grey[200],
               backgroundImage:
                   profilePicUrl != null ? NetworkImage(profilePicUrl!) : null,
               child: profilePicUrl == null
-                  ? const Icon(Icons.account_circle_outlined, size: 40)
+                  ? Icon(Icons.account_circle_outlined,
+                      size: 35, color: Colors.grey[600])
                   : null,
             ),
           ),
@@ -38,15 +41,17 @@ class top_app_bar extends StatelessWidget implements PreferredSizeWidget {
           Text(
             centerText,
             style: TextStyle(
-              fontSize: getDynamicFontSize(context, 28),
-              fontWeight: FontWeight.bold,
+              fontSize: getDynamicFontSize(context, 24),
+              fontWeight: FontWeight.w600,
+              color: Theme.of(context).textTheme.titleLarge?.color,
             ),
           ),
 
           // Right: Gear icon for settings
           IconButton(
-            iconSize: 30,
-            icon: const Icon(Icons.settings),
+            iconSize: 26,
+            icon:
+                Icon(Icons.settings, color: Theme.of(context).iconTheme.color),
             onPressed: onSettingsTap,
           )
         ],

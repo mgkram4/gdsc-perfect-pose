@@ -22,9 +22,25 @@ class PoseAnalyzer:
         
         # Load enhanced model
         try:
-            self.model = keras.models.load_model('models/saved/pose_model.keras')
-            logger.info("Loaded enhanced pose model")
-            self.model_available = True
+            # Try both locations for the model
+            model_paths = [
+                'models/saved/pose_model.keras',
+                '../models/models/saved/advanced_80_percent_model_20250622_160937.keras',
+                '../../models/models/saved/advanced_80_percent_model_20250622_160937.keras'
+            ]
+            
+            self.model = None
+            for path in model_paths:
+                try:
+                    self.model = keras.models.load_model(path)
+                    logger.info(f"Loaded enhanced pose model from: {path}")
+                    break
+                except:
+                    continue
+                    
+            self.model_available = self.model is not None
+            if not self.model_available:
+                logger.warning("Could not load any enhanced model - using geometric analysis only")
         except Exception as e:
             logger.warning(f"Could not load enhanced model: {e}")
             self.model_available = False
@@ -48,14 +64,25 @@ class PoseAnalyzer:
 
         # Get model prediction if available
         model_prediction = None
-        if self.model_available:
+        final_score = similarity_score  # Default to geometric similarity
+        
+        if self.model_available and self.model is not None:
             try:
-                # Prepare input for model
-                model_input = normalized_landmarks.reshape(1, -1, 51)  # Reshape for model input
+                # Prepare input for model (assuming model expects flattened landmarks)
+                model_input = normalized_landmarks.reshape(1, -1)  # Shape: (1, total_features)
                 prediction = self.model.predict(model_input, verbose=0)
-                model_prediction = float(prediction[0][list(self.pose_databases.keys()).index(category)])
+                
+                # For classification model, get the probability for the correct category
+                category_index = list(self.pose_databases.keys()).index(category)
+                model_prediction = float(prediction[0][category_index])
+                
+                # Combine geometric and ML scores (weighted average)
+                final_score = 0.3 * similarity_score + 0.7 * model_prediction
+                logger.info(f"Combined score: geometric={similarity_score:.3f}, ml={model_prediction:.3f}, final={final_score:.3f}")
+                
             except Exception as e:
                 logger.error(f"Model prediction error: {e}")
+                model_prediction = None
 
         # Generate suggestions
         suggestions = self.generate_suggestions(angle_differences)
@@ -63,7 +90,8 @@ class PoseAnalyzer:
         return {
             "category": category,
             "pose": pose_name,
-            "similarity_score": similarity_score,
+            "similarity_score": final_score,  # Frontend expects this field
+            "geometric_score": similarity_score,
             "model_score": model_prediction,
             "angle_differences": angle_differences,
             "suggestions": suggestions

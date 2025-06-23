@@ -74,6 +74,50 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> _handleGoogleSignIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final userCredential = await user.signInWithGoogle();
+
+      if (userCredential != null && mounted) {
+        // Successfully signed in with Google, navigation handled by AuthWrapper
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Successfully signed in with Google!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: const Text('Sign-In Error'),
+              content: Text('Google Sign-In failed: ${e.toString()}'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -196,9 +240,7 @@ class _LoginPageState extends State<LoginPage> {
 
                   // Sign up with Google Button
                   ElevatedButton.icon(
-                    onPressed: () {
-                      // Add your sign-up with Google functionality here
-                    },
+                    onPressed: _isLoading ? null : _handleGoogleSignIn,
                     label: const Text(
                       'Log In with Google',
                       style: TextStyle(

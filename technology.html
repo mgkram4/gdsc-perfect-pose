@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Technology Spinoffs</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SpaceExplorer</div>
+            <ul>
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="technology.html">Technology</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="tech-hero" style="background-image: url('https://images.unsplash.com/photo-1579548122026-671d1887a415?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); height: 60vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center;">
+            <div class="hero-content">
+                <h1>From Space to Earth</h1>
+                <p>Discover the everyday technologies developed from space exploration.</p>
+            </div>
+        </section>
+
+        <section id="tech-grid">
+            <h2>Technological Advancements</h2>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h3>GPS Navigation</h3>
+                    <p>Originally developed for military and intelligence applications, the Global Positioning System (GPS) is now essential for navigation in cars, phones, and aircraft.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Camera Phones</h3>
+                    <p>NASA's Jet Propulsion Laboratory developed compact, low-power CMOS image sensors in the 1990s, paving the way for the cameras found in billions of smartphones today.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Scratch-Resistant Lenses</h3>
+                    <p>NASA needed a way to protect astronaut helmet visors from scratches. This led to the development of a special coating that is now widely used on eyeglasses.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Memory Foam</h3>
+                    <p>Developed to improve seat cushioning and crash protection for pilots and astronauts, memory foam is now a popular material in mattresses, pillows, and footwear.</p>
+                </div>
+                <div class="grid-item">
+                    <h3>CAT Scans</h3>
+                    <p>The digital image processing techniques NASA used to enhance images from the Moon were adapted to create Computer-Aided Tomography (CAT) and Magnetic Resonance Imaging (MRI).</p>
+                </div>
+                <div class="grid-item">
+                    <h3>Wireless Headsets</h3>
+                    <p>NASA developed hands-free communication systems for astronauts, which led to the wireless headsets used by millions for calls and music.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SpaceExplorer. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+<style>
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.grid-item {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    border-radius: 10px;
+    border: 1px solid #00aaff;
+}
+</style> 

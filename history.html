@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History of Space Exploration</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">SpaceExplorer</div>
+            <ul>
+                <li><a href="index.html#hero">Home</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="technology.html">Technology</a></li>
+                <li><a href="index.html#gallery">Gallery</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="history-hero" style="background-image: url('https://images.unsplash.com/photo-1517976487-15185991561f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); height: 60vh; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center;">
+            <div class="hero-content">
+                <h1>History of Space Exploration</h1>
+                <p>A timeline of humanity's greatest achievements in space.</p>
+            </div>
+        </section>
+
+        <section id="timeline">
+            <h2>Major Milestones</h2>
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>1957: The First Satellite</h3>
+                        <p>The Soviet Union launches Sputnik 1, the first artificial satellite to orbit Earth, officially starting the space race.</p>
+                        <span class="country">USSR</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>1961: First Human in Space</h3>
+                        <p>Yuri Gagarin, a Soviet cosmonaut, becomes the first human to journey into outer space, completing one orbit of Earth.</p>
+                        <span class="country">USSR</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>1969: One Giant Leap for Mankind</h3>
+                        <p>The United States' Apollo 11 mission lands the first humans on the Moon. Neil Armstrong's first steps are watched by millions around the world.</p>
+                        <span class="country">USA</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>1998: The International Space Station</h3>
+                        <p>Assembly of the ISS begins, a collaborative project involving five space agencies: NASA (USA), Roscosmos (Russia), JAXA (Japan), ESA (Europe), and CSA (Canada).</p>
+                        <span class="country">International Collaboration</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>2015: Reusable Rockets</h3>
+                        <p>SpaceX, a private American company, successfully lands the first stage of its Falcon 9 rocket, a critical step towards reusable spacecraft and lower launch costs.</p>
+                        <span class="country">USA (Commercial)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 SpaceExplorer. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
+<style>
+.timeline-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+.timeline-container::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: #00aaff;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+}
+.timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    background-color: inherit;
+    width: 50%;
+}
+.timeline-item:nth-child(odd) {
+    left: 0;
+}
+.timeline-item:nth-child(even) {
+    left: 50%;
+}
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    right: -17px;
+    background-color: white;
+    border: 4px solid #00aaff;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+.timeline-item:nth-child(even)::after {
+    left: -16px;
+}
+.timeline-content {
+    padding: 20px 30px;
+    background-color: #222;
+    position: relative;
+    border-radius: 6px;
+}
+.timeline-content .country {
+    font-weight: bold;
+    color: #00aaff;
+}
+</style> 

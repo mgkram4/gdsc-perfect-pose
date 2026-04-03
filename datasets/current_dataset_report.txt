@@ -1,0 +1,27 @@
+
+CURRENT DATASET REPORT
+=====================
+Generated: 2025-06-22 16:00:22
+
+SAMPLES PER CATEGORY:
+          YOGA: 2,083 samples
+    BODYWEIGHT: 0 samples
+    FUNCTIONAL: 0 samples
+       LIFTING: 0 samples
+
+DATASET STATISTICS:
+  📊 Total samples: 2,083
+  📉 Minimum per category: 0
+  📈 Maximum per category: 2,083
+  ⚖️ Balance ratio: N/A
+
+READINESS FOR TRAINING:
+  ✅ Has yoga data: YES
+  ⚠️ Needs more bodyweight data: YES
+  ⚠️ Needs more functional data: YES
+  ⚠️ Needs more lifting data: YES
+
+NEXT STEPS:
+  1. Download additional datasets for underrepresented categories
+  2. Train model with current data (yoga-heavy)
+  3. Gradually balance dataset for 80% accuracy

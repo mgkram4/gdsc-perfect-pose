@@ -9,6 +9,7 @@
 datasets/massive_collection/
 datasets/downloaded/
 models/data/process/
+backend/models/data/process/
 models/models/saved/*.keras
 backend/models/data/images/
 backend/models/models/saved/
